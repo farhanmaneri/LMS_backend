@@ -6,6 +6,8 @@ const connectDB = require("./config/db.js");
 const authRoutes = require('./routes/auth.js');
 const adminRoutes = require('./routes/admin.js');
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware.js");
+const resultRoutes = require("./routes/resultRoutes.js")
+const attendanceRoutes= require("./routes/attendanceRoutes.js")
 const cors= require("cors")
 
 
@@ -16,6 +18,8 @@ app.use(cors());
 // Use routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/results', resultRoutes);
+app.use('/api/attendance', attendanceRoutes);
 app.use(notFound);
 app.use(errorHandler);
 // POST create
