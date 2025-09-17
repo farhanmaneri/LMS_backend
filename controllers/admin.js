@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/User');
 
 const createUser = async (req, res) => {
   const { email, password, role } = req.body;
@@ -11,4 +11,16 @@ const createUser = async (req, res) => {
   await user.save();
   res.json({ message: 'User created', user: { email, role } });
 };
-module.exports= {createUser}
+
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().select(
+      "-password -resetToken -resetTokenExpiry"
+    ); // Exclude sensitive fields
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = { createUser, getAllUsers };
