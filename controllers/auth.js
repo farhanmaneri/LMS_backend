@@ -1,4 +1,4 @@
-const User = require("../models/User")
+const User = require("../models/User.js")
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');  // For generating reset tokens

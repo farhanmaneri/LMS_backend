@@ -3,7 +3,7 @@ const ClassModel = require("../models/Class.js");
 const Exam = require("../models/Exam");
 const Result = require("../models/Result.js");
 const Attendance = require("../models/Attendance");
-const User = require("../models/User");
+const User = require("../models/User.js");
 
 const getDashboard = async (req, res) => {
   try {

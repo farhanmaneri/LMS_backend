@@ -17,8 +17,14 @@ const userSchema = new mongoose.Schema(
 
     // Student-specific
     rollNumber: String,
-    classId: { type: mongoose.Schema.Types.ObjectId, ref: "Class" },
-    parentContact: String,
+classId: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "Class",
+  required: function () {
+    return this.role === "student";
+  }
+}
+,    parentContact: String,
 
     // Teacher-specific
     subjects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Subject" }],
