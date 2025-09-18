@@ -5,14 +5,28 @@ const crypto = require('crypto');  // For generating reset tokens
 
 // Login
 const login = async (req, res) => {
+  console.log("📩 Request body:", req.body);
+console.log("📩 Full req.body:", req.body);
+console.log("📩 Email field type:", typeof req.body.email);
+
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (!user || !(await user.comparePassword(password))) {
-    return res.status(401).json({ message: 'Invalid credentials' });
-  }
+  
+if (!user) {
+  console.log("❌ No user found with email:", email);
+  return res.status(401).json({ message: "Invalid credentials" });
+}
 
-  const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-  res.json({ token, role: user.role , email: user.email});
+const isMatch = await user.comparePassword(password);
+console.log("🔑 Plain password:", password);
+console.log("🔒 Stored password:", user.password);
+console.log("✅ Compare result:", isMatch);
+
+if (!isMatch) {
+  return res.status(401).json({ message: "Invalid credentials" });
+}
+  const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
+  res.json({ token, role: user.role });
 };
 
 // Change Password (requires auth)
