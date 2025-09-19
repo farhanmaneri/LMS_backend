@@ -23,6 +23,10 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/results", resultRoutes);
 app.use("/api/attendance", attendanceRoutes);
 
+app.get("/", (req, res) => {
+  res.json({ message: "Backend is running 🚀" });
+});
+
 app.use(notFound);
 app.use(errorHandler);
 

@@ -1,7 +1,7 @@
-const User = require("../models/User.js")
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');  // For generating reset tokens
+const User = require("../models/User.js")
 
 // Login
 const login = async (req, res) => {
