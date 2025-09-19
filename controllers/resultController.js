@@ -1,9 +1,12 @@
 
 const Result = require("../models/Result");
+const Subject = require("../models/Subject");
+const Exam = require("../models/Exam");
+const User = require("../models/User");
 
 const addResult = async (req, res) => {
   try {
-    const { student, exam, subject, marksObtained, totalMarks } = req.body;
+    const { student, exam, classId, subject, marksObtained, totalMarks } = req.body;
 
     // Grade calculate
     let grade = "F";
@@ -13,7 +16,7 @@ const addResult = async (req, res) => {
     else if (percentage >= 60) grade = "B";
     else if (percentage >= 40) grade = "C";
 
-    const result = new Result({ student, exam, subject, marksObtained, totalMarks, grade });
+    const result = new Result({ student, exam, classId,subject, marksObtained, totalMarks, grade });
     await result.save();
 
     res.status(201).json(result);

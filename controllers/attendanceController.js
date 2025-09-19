@@ -3,7 +3,7 @@ const Attendance = require("../models/Attendance");
 const addAttendance = async (req, res) => {
   try {
     const { student, classId, status } = req.body;
-    const attendance = new Attendance({ student, classId, status });
+    const attendance = new Attendance({ student, classId,teacher, status });
     await attendance.save();
     res.status(201).json(attendance);
   } catch (err) {
