@@ -16,6 +16,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
+      "https://lms-frontend-gilt-five.vercel.app",
       "https://lms-backend-rho-steel.vercel.app",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
