@@ -12,8 +12,16 @@ const attendanceRoutes = require("./routes/attendanceRoutes.js");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
-
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://lms-backend-rho-steel.vercel.app",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 // Connect DB (runs once)
 connectDB();
 
