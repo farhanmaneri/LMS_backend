@@ -74,7 +74,7 @@ const forgetPassword = async (req, res) => {
     to: user.email,
     from: process.env.EMAIL_USER,
     subject: 'Password Reset',
-    text: `Click this link to reset: http://localhost:3000/reset/${resetToken}`  // Link to frontend reset page
+    text:  `Click this link to reset: ${process.env.FRONTEND_URL}/reset-password/${resetToken}` // Link to frontend reset page
   };
 
   transporter.sendMail(mailOptions, (err) => {
