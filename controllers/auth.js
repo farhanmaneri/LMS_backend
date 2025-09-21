@@ -5,29 +5,40 @@ const User = require("../models/User.js")
 
 // Login
 const login = async (req, res) => {
-  console.log("📩 Request body:", req.body);
-console.log("📩 Full req.body:", req.body);
-console.log("📩 Email field type:", typeof req.body.email);
-
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
-  
-if (!user) {
-  console.log("❌ No user found with email:", email);
-  return res.status(401).json({ message: "Invalid credentials" });
-}
 
-const isMatch = await user.comparePassword(password);
-console.log("🔑 Plain password:", password);
-console.log("🔒 Stored password:", user.password);
-console.log("✅ Compare result:", isMatch);
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      console.log("❌ No user found with email:", email);
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
 
-if (!isMatch) {
-  return res.status(401).json({ message: "Invalid credentials" });
-}
-  const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
-  res.json({ token, role: user.role });
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    // Generate JWT
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    // Remove password field before sending user
+    const { password: _, ...userData } = user.toObject();
+
+    res.json({
+      token,
+      user: userData, // includes name, email, profileUrl, role, etc.
+    });
+  } catch (err) {
+    console.error("⚠️ Login error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
 };
+
 
 // Change Password (requires auth)
 const changePassword = async (req, res) => {
