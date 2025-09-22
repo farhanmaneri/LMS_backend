@@ -73,8 +73,9 @@ const forgetPassword = async (req, res) => {
   const mailOptions = {
     to: user.email,
     from: process.env.EMAIL_USER,
-    subject: 'Password Reset',
-    text:  `Click this link to reset: ${process.env.FRONTEND_URL}/api/auth/reset-password?token=${resetToken}` // Link to frontend reset page
+    subject: "Password Reset",
+    // ✅ CORRECT: Link to FRONTEND reset page, not backend API
+    text: `Click this link to reset your password: ${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`,
   };
 
   transporter.sendMail(mailOptions, (err) => {
