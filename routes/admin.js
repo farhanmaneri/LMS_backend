@@ -1,10 +1,38 @@
-const express = require('express');
-const { createUser, getAllUsers } = require('../controllers/admin');
-const { protect, adminOnly } = require('../middlewares/auth.js');
+const express = require("express");
+const router = express.Router();
 
-const adminRoutes = express.Router();
+const {
+  createUser,
+  getAllUsers,
+  deleteUser,
+  createClass,
+  getAllClasses,
+  createSubject,
+  getAllSubjects,
+  createExam,
+  getAllExams,
+} = require("../controllers/admin");
 
-adminRoutes.post('/create-user', protect, adminOnly, createUser);
-adminRoutes.get('/users', protect, adminOnly, getAllUsers); // New route
+const { protect, authorize } = require("../middlewares/auth");
 
-module.exports = adminRoutes;
+// Protect all admin routes, only role = admin
+router.use(protect, authorize("admin"));
+
+// Users
+router.post("/create-user", createUser);
+router.get("/users", getAllUsers);
+router.delete("/users/:id", deleteUser);
+
+// Classes
+router.post("/classes", createClass);
+router.get("/classes", getAllClasses);
+
+// Subjects
+router.post("/subjects", createSubject);
+router.get("/subjects", getAllSubjects);
+
+// Exams
+router.post("/exams", createExam);
+router.get("/exams", getAllExams);
+
+module.exports = router;

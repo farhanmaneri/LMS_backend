@@ -6,9 +6,10 @@ const serverless = require("serverless-http");
 const connectDB = require("./config/db.js");
 const authRoutes = require("./routes/auth.js");
 const adminRoutes = require("./routes/admin.js");
+const teacherRoutes = require("./routes/teacherRoutes.js")
+const studentRoutes = require("./routes/studentRoutes.js")
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware.js");
-const resultRoutes = require("./routes/resultRoutes.js");
-const attendanceRoutes = require("./routes/attendanceRoutes.js");
+
 
 const app = express();
 app.use(express.json());
@@ -29,8 +30,9 @@ connectDB();
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
-app.use("/api/results", resultRoutes);
-app.use("/api/attendance", attendanceRoutes);
+
+app.use("/api/teacher", teacherRoutes);
+app.use("/api/student", studentRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Backend is running 🚀" });
