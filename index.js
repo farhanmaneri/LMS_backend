@@ -8,6 +8,7 @@ const authRoutes = require("./routes/auth.js");
 const adminRoutes = require("./routes/admin.js");
 const teacherRoutes = require("./routes/teacherRoutes.js")
 const studentRoutes = require("./routes/studentRoutes.js")
+const resultRoutes = require("./routes/resultRoutes.js")
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware.js");
 
 
@@ -33,7 +34,7 @@ app.use("/api/admin", adminRoutes);
 
 app.use("/api/teacher", teacherRoutes);
 app.use("/api/student", studentRoutes);
-
+app.use("/api/results", resultRoutes)
 app.get("/", (req, res) => {
   res.json({ message: "Backend is running 🚀" });
 });
