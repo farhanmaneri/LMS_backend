@@ -18,6 +18,13 @@ const addResult = async (req, res) => {
 
     const result = new Result({ student, exam, classId,subject, marksObtained, totalMarks, grade });
     await result.save();
+    // Update the user's results array
+    const user = await User.findById(student);
+    if (!user) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    user.results.push(result._id);
+    await user.save();
 
     res.status(201).json(result);
   } catch (err) {
@@ -25,7 +32,7 @@ const addResult = async (req, res) => {
   }
 };
 
-const getStudentResults = async (req, res) => {
+const getStudentResult = async (req, res) => {
   try {
     const results = await Result.find({ student: req.params.id })
       .populate("exam subject");
@@ -34,4 +41,13 @@ const getStudentResults = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-module.exports= {addResult, getStudentResults}
+const getStudentResults = async (req, res) => {
+  try {
+    const results = await Result.find({ })
+      .populate("exam subject");
+    res.json(results);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+module.exports= {addResult,getStudentResult, getStudentResults}

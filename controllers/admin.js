@@ -39,6 +39,29 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+// ✅ Get single user by ID
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params; // /api/users/:id
+    const user = await User.findById(id).select("-password"); // exclude password
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json(user);
+  } catch (err) {
+    console.error("❌ getUserById error:", err);
+
+    // If invalid ObjectId format is passed
+    if (err.kind === "ObjectId") {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
+
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 // ✅ Delete user
 const deleteUser = async (req, res) => {
   try {
@@ -148,6 +171,7 @@ module.exports = {
   createUser,
   getAllUsers,
   deleteUser,
+  getUserById,
   // Classes
   createClass,
   getAllClasses,

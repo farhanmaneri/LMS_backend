@@ -5,6 +5,7 @@ const {
   createUser,
   getAllUsers,
   deleteUser,
+  getUserById,
   createClass,
   getAllClasses,
   createSubject,
@@ -22,6 +23,7 @@ router.use(protect, authorize("admin"));
 router.post("/create-user", createUser);
 router.get("/users", getAllUsers);
 router.delete("/users/:id", deleteUser);
+router.get("/users/:id", getUserById);
 
 // Classes
 router.post("/classes", createClass);
