@@ -32,15 +32,15 @@ const addResult = async (req, res) => {
   }
 };
 
-const getStudentResult = async (req, res) => {
-  try {
-    const results = await Result.find({ student: req.params.id })
-      .populate("exam subject");
-    res.json(results);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+// const getMyResults = async (req, res) => {
+//   try {
+//     const results = await Result.find({ student: req.params.id })
+//       .populate("exam subject");
+//     res.json(results);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// };
 const getStudentResults = async (req, res) => {
   try {
     const results = await Result.find({ })
@@ -50,4 +50,4 @@ const getStudentResults = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-module.exports= {addResult,getStudentResult, getStudentResults}
+module.exports= {addResult, getStudentResults}

@@ -9,6 +9,6 @@ authRoutes.post('/login', login);
 authRoutes.post('/change-password', protect, changePassword);
 authRoutes.post('/forget-password', forgetPassword);
 authRoutes.post('/reset-password', resetPassword);
-authRoutes.get('/getdashboard', protect, getDashboard)
+// authRoutes.get('/getdashboard', protect, getDashboard)
 
 module.exports = authRoutes;
